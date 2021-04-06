@@ -1,0 +1,17 @@
+---
+- name: Setting up server
+  host: all
+  become: true
+
+  pre_tasks:
+    - name: Update and upgrade repositories.
+      apt:
+        update_cache=yes
+        upgrade=yes
+    - name: Install vim
+      apt:
+        name: vim
+        state: present
+    - name: Configure vim
+      apt: 
+
