@@ -1,7 +1,10 @@
 ---
 - name: Setting up server
-  host: all
+  hosts: all
   become: true
+
+  vars_files:
+    - vars.yml
 
   pre_tasks:
     - name: Update and upgrade repositories.
@@ -13,5 +16,15 @@
         name: vim
         state: present
     - name: Configure vim
-      apt: 
+      get_url:
+        url: "https://raw.githubusercontent.com/CalvoUTN/infra/master/vim/.vimrc"
+        dest: "/home/venus/.vimrc"
 
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Install docker-compose
+      include: subtasks/docker-compose.yml
