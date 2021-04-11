@@ -1,0 +1,11 @@
+---
+# tasks file for vim
+- name: Ensure vim is installed.
+  package:
+    name: vim
+    state: present
+
+- name: Ensure latest dotfiles are deployed.
+  get_url:
+    url: "https://raw.githubusercontent.com/CalvoUTN/infra/master/roles/vim/files/.vimrc"
+    dest: "{{ ansible_env.HOME}}/.vimrc"

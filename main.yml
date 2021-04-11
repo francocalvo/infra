@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: osiris
+  hosts: venus
   become: true
 
   pre_tasks:
@@ -9,31 +9,6 @@
         update_cache=yes
         upgrade=yes
 
-    - name: Install vim
-      apt:
-        name: vim
-        state: present
-      tags:
-        - vim
-
-    - name: Configure vim
-      get_url:
-        url: "https://raw.githubusercontent.com/CalvoUTN/infra/master/vim/.vimrc"
-        dest: "{{ ansible_env.HOME }}/.vimrc"
-      tags:
-        - vim 
-
-  tasks:
-    - name: Install Docker
-      apt:
-        name: docker-ce
-        state: present
-
-    - name: Open docker endpoints
-      lineinfile:
-        dest: "/lib/systemd/system/docker.service"
-        regexp: '^ExecStart='
-        line: "ExecStart=/usr/bin/dockerd -H fd:// -H=tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock"
-
-    - name: Install docker-compose
-      include: subtasks/docker-compose.yml
+  roles:
+    - vim
+    - docker

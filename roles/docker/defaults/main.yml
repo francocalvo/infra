@@ -2,5 +2,3 @@ download_dir: /temp
 docker_compose_version: 1.29.0
 docker_compose_dir: /usr/local/bin/docker-compose
 docker_compose_checksum: sha256:65bf4d3dcc5ea5dcd4644434271879a2b47e98bcfa6ca958523079c17e5adb5c
-
-
