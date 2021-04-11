@@ -1,11 +1,28 @@
 ---
-- name: Checking current version.
+# Tasks for docker role.
+# This role will:
+#   - Install Docker.
+#   - Open endpoint of Docker.
+#   - Install docker-compose
+
+- name:  Ensure Docker is installed.
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Ensure Docker endpoints are open.
+  lineinfile:
+    dest: "/lib/systemd/system/docker.service"
+    regexp: '^ExecStart='
+    line: "ExecStart=/usr/bin/dockerd -H fd:// -H=tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock"
+
+- name: Check docker-compose current version.
   command: "docker-compose --version"
   register: docker_compose_current_version
   changed_when: false
   failed_when: false
 
-- name: Deleting old version if needed
+- name:  Check docker-compose file directory.
   file:
     path: "{{ docker_compose_dir }}"
     state: absent
@@ -13,7 +30,7 @@
     docker_compose_current_version.stdout is defined
     and docker_compose_version not in docker_compose_current_version.stdout
 
-- name: Installing docker-compose
+- name: Install docker-compose latest version.
   get_url:
     url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
     dest: "{{ docker_compose_dir }}"
