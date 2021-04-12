@@ -1,0 +1,23 @@
+---
+# tasks file for media-containers
+- name: Create needed directory.
+  file:
+    path: ~/services
+    state: directory
+  become: no
+    
+- name: Copy docker-compose files.
+  unarchive:
+    src: ../files/docker-compose-files.tar.gz
+    dest: ~/services/
+  become: no
+
+- name: Configure qbittorrent
+  lineinfile:
+    path: ~/services/config/qbittorrent/docker-compose.yml
+    regexp: 'config$'
+    line: "     - ~/services/config/qbittorrent:/config"
+  become: no
+  
+
+
