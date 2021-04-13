@@ -2,22 +2,20 @@
 # tasks file for media-containers
 - name: Create needed directory.
   file:
-    path: ~/services
+    path: "{{ ansible_env.HOME }}/services"
     state: directory
-  become: no
     
 - name: Copy docker-compose files.
   unarchive:
     src: ../files/docker-compose-files.tar.gz
-    dest: ~/services/
-  become: no
+    dest: "{{ ansible_env.HOME }}/services/"
 
 - name: Configure qbittorrent
   lineinfile:
-    path: ~/services/config/qbittorrent/docker-compose.yml
+    path: "{{ ansible_env.HOME }}/services/config/qbittorrent/docker-compose.yml"
     regexp: 'config$'
-    line: "     - ~/services/config/qbittorrent:/config"
-  become: no
+    line: "     - {{ ansible_env.HOME }}/services/config/qbittorrent:/config"
   
 
-
+- name: Configure Jellyfin
+  import_tasks: jellyfin.yml

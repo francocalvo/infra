@@ -4,6 +4,7 @@
   package:
     name: vim
     state: present
+  become: yes
 
 - name: Ensure latest dotfiles are deployed.
   get_url:

@@ -9,12 +9,14 @@
   apt:
     name: docker-ce
     state: present
+  become: yes
 
 - name: Ensure Docker endpoints are open.
   lineinfile:
     dest: "/lib/systemd/system/docker.service"
     regexp: '^ExecStart='
     line: "ExecStart=/usr/bin/dockerd -H fd:// -H=tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock"
+  become: yes
 
 - name: Check docker-compose current version.
   command: "docker-compose --version"
@@ -39,3 +41,4 @@
   when: >
     docker_compose_current_version.stdout is not defined
     or docker_compose_version not in docker_compose_current_version.stdout
+  become: yes

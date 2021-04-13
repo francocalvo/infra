@@ -1,0 +1,28 @@
+---
+# tasks file for haste-client
+- name: Install dependecies.
+  package:
+    name:
+      - golang-go
+      - unzip
+    state: present
+    update_cache: true
+
+- name: Clone repositoy.
+  unarchive:
+    remote_src: yes
+    src: 'https://github.com/zneix/haste-client/archive/refs/heads/master.zip' 
+    dest: /tmp
+
+- name: Configure personal hastebin.
+  lineinfile:
+    path: /tmp/haste-client-master/main.go
+    regexp: 'https://haste.zneix.eu'
+    line: ' hasteURL     = flag.String("d", "https://bin.francocalvo.ar", fmt.Sprintf("Personal hastebin repository."))'
+
+- name: Install haste-client.
+  community.general.make:
+    chdir: '/tmp/haste-client-master'
+  become: yes
+  tags:
+    - current
