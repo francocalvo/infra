@@ -1,0 +1,19 @@
+---
+# tasks file for samba
+- name: Ensure samba client is installed.
+  package:
+    name: smbclient
+    state: present
+
+- name: Ensure samba mountpoint exists.
+  file:
+    path: /mnt/olimpo
+    state: directory
+
+- name: Mount samba share as Olimpo
+  mount:
+    src: //192.168.0.182/storage
+    path: /mnt/olimpo
+    fstype: cifs
+    opts: "_netdev,username={{ smb_user }},password={{ smb_pass  }}"
+    state: mounted
