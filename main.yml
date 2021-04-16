@@ -1,14 +1,22 @@
 ---
 - name: Setting up server
-  hosts: venus
-  become: true
+  hosts: dionisio
+  become: no
 
   pre_tasks:
     - name: Update and upgrade repositories.
       apt:
         update_cache=yes
         upgrade=yes
+      become: yes
 
   roles:
-    - vim
-    - docker
+#    - vim
+#    - docker
+#    - samba
+#    - media-containers
+    - haste-client 
+    - gitea
+    - qbittorrent
+    - calibre-web
+    - haste-server

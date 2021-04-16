@@ -1,0 +1,4 @@
+---
+# handlers file for haste-client
+- name: clearing cache
+  shell: 'hash -r'

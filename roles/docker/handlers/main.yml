@@ -1,2 +1,12 @@
 ---
 # handlers file for docker
+- name: reloading daemons
+  shell: "systemctl daemon-reload"
+  become: yes
+  notify: restarting docker service
+
+- name: restarting docker service
+  service:
+    name: docker
+    state: restarted
+  become: yes

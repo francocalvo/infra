@@ -1,0 +1,29 @@
+---
+- name: Configure Jellyfin
+  block:
+    - name: Configure Jellyfin [change directory]
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/services/config/jellyfin/docker-compose.yml"
+        regexp: 'config$'
+        line: "     - {{ ansible_env.HOME }}/services/config/jellyfin:/config"
+
+    - name: Configure Jellyfin [Get PUID]
+      command: "id --user {{ ansible_env.USER }}"
+      register: current_puid
+
+    - name: Configure Jellyfin [Get PGID]
+      command: "id --group {{ ansible_env.USER }}"
+      register: current_pgid
+
+    - name: Configure Jellyfin [Change PUID]
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/services/config/jellyfin/docker-compose.yml"
+        regexp: 'PUID'
+        line: "      - PUID={{ current_puid.stdout }}"
+
+    - name: Configure Jellyfin [Change PGID]
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/services/config/jellyfin/docker-compose.yml"
+        regexp: 'PGID'
+        line: "      - PUID={{ current_pgid.stdout }}"
+

@@ -4,8 +4,11 @@
   package:
     name: vim
     state: present
+  become: yes
 
 - name: Ensure latest dotfiles are deployed.
   get_url:
     url: "https://raw.githubusercontent.com/CalvoUTN/infra/master/roles/vim/files/.vimrc"
-    dest: "{{ ansible_env.HOME}}/.vimrc"
+    dest: "~/.vimrc"
+  become: no
+    

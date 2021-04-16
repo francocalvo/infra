@@ -1,0 +1,4 @@
+---
+# handlers file for samba
+- name: remounting fstab
+  shell: "mount -a"
