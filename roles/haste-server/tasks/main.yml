@@ -1,0 +1,27 @@
+---
+# tasks file for gitea
+
+- name: Make sure services/config/haste-server exists
+  file:
+    path: "{{ ansible_env.HOME  }}/services/config/haste-server/data"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  copy:
+    src: ../files/docker-compose.yml
+    dest: "{{ ansible_env.HOME  }}/services/config/haste-server"
+    force: no
+  become: yes
+
+- name: Configure config directory.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/haste-server/docker-compose.yml"
+    regexp: '/data$'
+    line: "      - {{ ansible_env.HOME }}/services/config/haste-server/data:/app/data"
+  become: yes
+
+- name: Start docker container.
+  community.docker.docker_compose:
+    project_src: "{{ ansible_env.HOME  }}/services/config/haste-server/"
+  become: yes

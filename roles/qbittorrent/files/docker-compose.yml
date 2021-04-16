@@ -1,0 +1,21 @@
+---
+version: "2.1"
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/Argentina/Cordoba
+      - UMASK_SET=022
+      - WEBUI_PORT=8080
+    volumes:
+      - :/config
+      - /mnt/olimpo:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
+    restart: unless-stopped
+

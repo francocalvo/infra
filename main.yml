@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: venus
+  hosts: dionisio
   become: no
 
   pre_tasks:
@@ -11,8 +11,12 @@
       become: yes
 
   roles:
-    - vim
-    - docker
-    - samba
-    - media-containers
+#    - vim
+#    - docker
+#    - samba
+#    - media-containers
     - haste-client 
+    - gitea
+    - qbittorrent
+    - calibre-web
+    - haste-server

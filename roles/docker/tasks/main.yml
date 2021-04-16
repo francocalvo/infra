@@ -11,34 +11,32 @@
     state: present
   become: yes
 
+- name: Ensure Docker Python module is installed.
+  pip:
+    name: docker
+    state: present
+  become: yes
+  ignore_errors: yes
+
 - name: Ensure Docker endpoints are open.
   lineinfile:
     dest: "/lib/systemd/system/docker.service"
     regexp: '^ExecStart='
     line: "ExecStart=/usr/bin/dockerd -H fd:// -H=tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock"
   become: yes
+  notify: reloading daemons
 
-- name: Check docker-compose current version.
-  command: "docker-compose --version"
-  register: docker_compose_current_version
-  changed_when: false
-  failed_when: false
+- name: Force handlers if called.
+  meta: flush_handlers
 
-- name:  Check docker-compose file directory.
-  file:
-    path: "{{ docker_compose_dir }}"
-    state: absent
-  when: > 
-    docker_compose_current_version.stdout is defined
-    and docker_compose_version not in docker_compose_current_version.stdout
+- name: Ensure pip3 is installed.
+  apt:
+    name: python3-pip
+    state: present
+  become: yes
 
-- name: Install docker-compose latest version.
-  get_url:
-    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
-    dest: "{{ docker_compose_dir }}"
-    mode: 0755
-    checksum: "{{ docker_compose_checksum }}"
-  when: >
-    docker_compose_current_version.stdout is not defined
-    or docker_compose_version not in docker_compose_current_version.stdout
+- name: Install docker-compose via pip3.
+  pip:
+    name: docker-compose
+    state: present
   become: yes

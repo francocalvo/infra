@@ -1,0 +1,66 @@
+---
+# tasks file for gitea
+
+- name: Make sure services/config/gitea exists
+  file:
+    path: "{{ ansible_env.HOME  }}/services/config/gitea"
+    state: directory
+
+- name: Make sure docker-compose.yml is in place.
+  copy:
+    src: ../files/docker-compose.yml
+    dest: "{{ ansible_env.HOME  }}/services/config/gitea"
+    force: no
+  become: yes
+
+- name: Changing db root password.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/gitea/docker-compose.yml"
+    regexp: 'MYSQL_ROOT_PASSWORD'
+    line: "      - MYSQL_ROOT_PASSWORD={{ db_root_password  }}"
+  become: yes
+
+
+- name: Changing db password.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/gitea/docker-compose.yml"
+    regexp: 'MYSQL_PASSWORD'
+    line: "      - MYSQL_PASSWORD={{ db_password  }}"
+  become: yes
+
+
+- name: Change web port.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/gitea/docker-compose.yml"
+    regexp: '3000:3000'
+    line: '      - "{{ web_port  }}:3000"'
+  become: yes
+
+
+- name: Change config directory.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/gitea/docker-compose.yml"
+    regexp: '/data$'
+    line: "      - {{ ansible_env.HOME }}/services/config/gitea/data:/data"
+  become: yes
+
+
+- name: Change database directory.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/gitea/docker-compose.yml"
+    regexp: '/mysql$'
+    line: "      - {{ ansible_env.HOME }}/services/config/gitea:/var/lib/mysql"
+  become: yes
+
+- name: Start docker container.
+  community.docker.docker_compose:
+    project_src: "{{ ansible_env.HOME  }}/services/config/gitea/"
+  become: yes
+
+- name: Install custom header for KaTeX.
+  copy:
+    src: "../files/header.tmpl"
+    dest: "{{ ansible_env.HOME }}/services/config/gitea/data/gitea/templates/custom/"
+    force: no
+  become: yes
+

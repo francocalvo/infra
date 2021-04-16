@@ -1,0 +1,11 @@
+version: '3.0'
+services:
+  haste-server:
+    image: sunred/haste-server:latest-slim
+    container_name: hastebin
+    network_mode: bridge
+    ports:
+      - 7777:7777/tcp
+    volumes:
+      - /home/vulcan/haste-server/data
+      - /home/vulcan/haste-server/data:/app/data

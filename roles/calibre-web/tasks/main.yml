@@ -1,0 +1,27 @@
+---
+# tasks file for gitea
+
+- name: Make sure services/config/calibre-web exists
+  file:
+    path: "{{ ansible_env.HOME  }}/services/config/calibre-web"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  copy:
+    src: ../files/docker-compose.yml
+    dest: "{{ ansible_env.HOME  }}/services/config/calibre-web"
+    force: no
+  become: yes
+
+- name: Configure config directory.
+  lineinfile:
+    path: "{{ ansible_env.HOME  }}/services/config/calibre-web/docker-compose.yml"
+    regexp: '/config$'
+    line: "      - {{ ansible_env.HOME }}/services/config/calibre-web:/config"
+  become: yes
+
+- name: Start docker container.
+  community.docker.docker_compose:
+    project_src: "{{ ansible_env.HOME  }}/services/config/calibre-web/"
+  become: yes
