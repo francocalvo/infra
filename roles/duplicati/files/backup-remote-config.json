@@ -1,0 +1,85 @@
+{
+  "CreatedByVersion": "2.0.5.1",
+  "Schedule": {
+    "ID": 2,
+    "Tags": [
+      "ID=4"
+    ],
+    "Time": "2021-04-25T10:00:00Z",
+    "Repeat": "1D",
+    "LastRun": "0001-01-01T03:00:00Z",
+    "Rule": "AllowedWeekDays=Monday,Wednesday,Friday",
+    "AllowedDays": [
+      "mon",
+      "wed",
+      "fri"
+    ]
+  },
+  "Backup": {
+    "ID": "4",
+    "Name": "Backup-remote",
+    "Description": "",
+    "Tags": [],
+    "TargetURL": "onedrivev2://Backups/venus?authid=3f4a99864696f970b052fbe8b7a5ae0b%3AXv7HwT0fK2N5Y0XrYkXoK",
+    "DBPath": "/config/PVPGDZRMCV.sqlite",
+    "Sources": [
+      "/BackupStorage/"
+    ],
+    "Settings": [
+      {
+        "Filter": "",
+        "Name": "encryption-module",
+        "Value": "aes",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "compression-module",
+        "Value": "zip",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "dblock-size",
+        "Value": "50mb",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "keep-time",
+        "Value": "2W",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "passphrase",
+        "Value": "placeholder",
+        "Argument": null
+      }
+    ],
+    "Filters": [],
+    "Metadata": {
+      "LastBackupDate": "20210424T161916Z",
+      "BackupListCount": "1",
+      "TotalQuotaSpace": "1099511627776",
+      "FreeQuotaSpace": "1035289822939",
+      "AssignedQuotaSpace": "-1",
+      "TargetFilesSize": "2786999",
+      "TargetFilesCount": "3",
+      "TargetSizeString": "2,66 MB",
+      "SourceFilesSize": "2773396",
+      "SourceFilesCount": "5",
+      "SourceSizeString": "2,64 MB",
+      "LastBackupStarted": "20210424T161916Z",
+      "LastBackupFinished": "20210424T161929Z",
+      "LastBackupDuration": "00:00:13.6140890",
+      "LastCompactDuration": "00:00:00.0006700",
+      "LastCompactStarted": "20210424T161922Z",
+      "LastCompactFinished": "20210424T161922Z"
+    },
+    "IsTemporary": false
+  },
+  "DisplayNames": {
+    "/BackupStorage/": "BackupStorage"
+  }
+}

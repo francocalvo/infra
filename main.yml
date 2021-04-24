@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: venus
+  hosts: dionisio
   become: no
 
   pre_tasks:
@@ -11,9 +11,11 @@
       become: yes
 
   roles:
-    - vim
-#    - docker
+#    - vim
+#    - geerlingguy.docker
+#    - docker-compose
 #    - samba
+    - duplicati
 #    - media-containers
 #    - haste-client 
 #    - gitea

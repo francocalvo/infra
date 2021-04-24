@@ -4,11 +4,13 @@
   package:
     name: smbclient
     state: present
+  become: yes
 
 - name: Ensure samba mountpoint exists.
   file:
     path: /mnt/olimpo
     state: directory
+  become: yes
 
 - name: Mount samba share as Olimpo
   mount:
@@ -17,3 +19,4 @@
     fstype: cifs
     opts: "_netdev,username={{ smb_user }},password={{ smb_pass  }}"
     state: mounted
+  become: yes

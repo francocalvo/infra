@@ -1,0 +1,68 @@
+{
+  "CreatedByVersion": "2.0.5.1",
+  "Schedule": {
+    "ID": 1,
+    "Tags": [
+      "ID=3"
+    ],
+    "Time": "2021-04-25T08:00:00Z",
+    "Repeat": "1D",
+    "LastRun": "0001-01-01T03:00:00Z",
+    "Rule": "AllowedWeekDays=Monday,Wednesday,Saturday,Friday",
+    "AllowedDays": [
+      "mon",
+      "wed",
+      "sat",
+      "fri"
+    ]
+  },
+  "Backup": {
+    "ID": "3",
+    "Name": "Backup-local",
+    "Description": "",
+    "Tags": [],
+    "TargetURL": "file:///BackupStorage/",
+    "DBPath": "/config/GMGRXFDZEZ.sqlite",
+    "Sources": [
+      "/ServicesBackedup/"
+    ],
+    "Settings": [
+      {
+        "Filter": "",
+        "Name": "encryption-module",
+        "Value": "",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "compression-module",
+        "Value": "zip",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "dblock-size",
+        "Value": "50mb",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "keep-versions",
+        "Value": "1",
+        "Argument": null
+      },
+      {
+        "Filter": "",
+        "Name": "--no-encryption",
+        "Value": "true",
+        "Argument": null
+      }
+    ],
+    "Filters": [],
+    "Metadata": {},
+    "IsTemporary": false
+  },
+  "DisplayNames": {
+    "/ServicesBackedup/": "ServicesBackedup"
+  }
+}
