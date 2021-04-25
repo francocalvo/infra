@@ -1,0 +1,22 @@
+---
+version: "2.1"
+services:
+  jellyfin:
+    image: linuxserver/jellyfin:amd64-latest
+    container_name: jellyfin
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/Argentina/Cordoba
+    volumes:
+      - /home/dionisio/services/config/jellyfin:/config
+      - /mnt/olimpo/Series:/data/tvshows
+      - /mnt/olimpo/Movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    devices:
+      - /dev/dri:/dev/dri #optiona
+    restart: unless-stopped
