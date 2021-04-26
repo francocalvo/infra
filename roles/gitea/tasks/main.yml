@@ -5,6 +5,7 @@
   file:
     path: "{{ ansible_env.HOME  }}/services/config/gitea"
     state: directory
+  become: yes
 
 - name: Make sure docker-compose.yml is in place.
   copy:
@@ -63,4 +64,3 @@
     dest: "{{ ansible_env.HOME }}/services/config/gitea/data/gitea/templates/custom/"
     force: no
   become: yes
-

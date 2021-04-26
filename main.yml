@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: dionisio
+  hosts: venus
   become: no
 
   pre_tasks:
@@ -16,10 +16,9 @@
 #    - docker-compose
 #    - samba
     - duplicati
-#    - media-containers
-#    - haste-client 
-#    - gitea
+#    - haste-client
+    - gitea
 #    - qbittorrent
-#    - calibre-web
+    - calibre-web
 #    - haste-server
-    - jellyfin
+#    - jellyfin

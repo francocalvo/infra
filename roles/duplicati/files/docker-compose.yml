@@ -1,4 +1,5 @@
 ---
+
 version: "2.1"
 services:
   duplicati:
@@ -9,9 +10,9 @@ services:
       - PGID=0
       - TZ=America/Argentina/Cordoba
     volumes:
-      - /home/venus/services/config/duplicati:/config #configfiles
-      - /mnt/olimpo/Backups/venus:/BackupStorage #backupstorage
-      - /home/venus/services:/ServicesBackedup #backupedfolder
+      - /home/venus/services/config/duplicati:/config  # configfiles
+      - /mnt/olimpo/Backups/venus:/BackupStorage  # backupstorage
+      - /home/venus/services:/ServicesBackedup  # backupedfolder
     ports:
       - 8200:8200
     restart: unless-stopped
