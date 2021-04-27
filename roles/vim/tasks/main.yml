@@ -23,3 +23,14 @@
     url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     dest: "~/.vim/autoload/plug.vim"
   become: no
+
+- name: Ensure plugin folder ~/.vim/UltiSnips/ exists
+  file:
+    path: "~/.vim/UltiSnips"
+    state: directory
+  become: no
+
+- name: Ensure latest TeX snippets are installed.
+  copy:
+    src: "../files/tex.snippets"
+    dest: "~/.vim/UltiSnips/tex.snippets"
