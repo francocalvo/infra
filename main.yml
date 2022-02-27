@@ -11,8 +11,8 @@
       become: yes
 
   roles:
-    - geerlingguy.docker
-    - docker-compose
+    # - geerlingguy.docker
+    # - docker-compose
     - haste-server
     # - vim
     # - samba
