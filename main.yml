@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: venus
+  hosts: vulcan
   become: no
 
   pre_tasks:
@@ -11,14 +11,14 @@
       become: yes
 
   roles:
-#    - vim
-#    - geerlingguy.docker
-#    - docker-compose
-#    - samba
-    - duplicati
-#    - haste-client
-    - gitea
-#    - qbittorrent
-    - calibre-web
-#    - haste-server
-#    - jellyfin
+    - geerlingguy.docker
+    - docker-compose
+    - haste-server
+    # - vim
+    # - samba
+    # - duplicati
+    # - haste-client
+    # - gitea
+    # - qbittorrent
+    # - calibre-web
+    # - jellyfin
