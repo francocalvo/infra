@@ -3,22 +3,18 @@
 
 - name: Make sure services/config/haste-server exists
   file:
-    path: "{{ ansible_env.HOME  }}/services/config/haste-server/data"
+    path: "{{ appdata_dir }}/haste-server"
     state: directory
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
-  copy:
-    src: ../files/docker-compose.yml
-    dest: "{{ ansible_env.HOME  }}/services/config/haste-server"
+  template:
+    src: files/docker-compose.yml
+    dest: "{{ appdata_dir }}/haste-server"
     force: no
-  become: yes
-
-- name: Configure config directory.
-  lineinfile:
-    path: "{{ ansible_env.HOME  }}/services/config/haste-server/docker-compose.yml"
-    regexp: '/data$'
-    line: "      - {{ ansible_env.HOME }}/services/config/haste-server/data:/app/data"
+  notify:
+    - pulling docker image
+    - starting docker container
   become: yes
 
 - name: Start docker container.

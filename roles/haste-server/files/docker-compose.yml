@@ -7,5 +7,4 @@ services:
     ports:
       - 7777:7777/tcp
     volumes:
-      - /home/vulcan/haste-server/data
-      - /home/vulcan/haste-server/data:/app/data
+      - {{ appdata_dir }}/haste-server/data:/app/data
