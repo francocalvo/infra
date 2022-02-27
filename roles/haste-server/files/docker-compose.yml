@@ -1,3 +1,4 @@
+---
 version: '3.0'
 services:
   haste-server:
@@ -8,3 +9,4 @@ services:
       - 7777:7777/tcp
     volumes:
       - {{ appdata_dir }}/haste-server/data:/app/data
+

@@ -11,13 +11,8 @@
   template:
     src: files/docker-compose.yml
     dest: "{{ appdata_dir }}/haste-server"
-    force: no
+    validate: docker-compose -f %s config
   notify:
     - pulling docker image
     - starting docker container
-  become: yes
-
-- name: Start docker container.
-  community.docker.docker_compose:
-    project_src: "{{ ansible_env.HOME  }}/services/config/haste-server/"
   become: yes
