@@ -13,30 +13,6 @@
     state: present
   become: yes
 
-- name: Ensure Docker Python module is installed.
-  pip:
-    name: docker
-    state: present
-  become: yes
-  ignore_errors: yes
-
-- name: Ensure Docker endpoints are open.
-  lineinfile:
-    dest: "/lib/systemd/system/docker.service"
-    regexp: '^ExecStart='
-    line: "ExecStart=/usr/bin/dockerd -H fd:// -H=tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock"
-  become: yes
-  notify: reloading daemons
-
-- name: Force handlers if called.
-  meta: flush_handlers
-
-- name: Ensure pip3 is installed.
-  apt:
-    name: python3-pip
-    state: present
-  become: yes
-
 - name: Install docker-compose via pip3.
   pip:
     name: docker-compose
