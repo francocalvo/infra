@@ -13,12 +13,12 @@
   roles:
     # - geerlingguy.docker
     # - docker-compose
-    - haste-server
+    # - haste-server
     # - vim
     # - samba
     # - duplicati
     # - haste-client
-    # - gitea
+    - gitea
     # - qbittorrent
     # - calibre-web
     # - jellyfin
