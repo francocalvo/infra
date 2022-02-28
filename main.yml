@@ -18,6 +18,7 @@
     - gitea
     - haste-server
     - portainer
+    - redbot
     # - vim
     # - duplicati
     # - haste-client

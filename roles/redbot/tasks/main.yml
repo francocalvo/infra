@@ -1,0 +1,16 @@
+---
+- name: Make sure services/config/redbot exists
+  file:
+    path: "{{ appdata_dir }}/redbot"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: files/docker-compose.yml
+    dest: "{{ appdata_dir }}/redbot"
+    validate: docker-compose -f %s config
+  notify:
+    - "redbot : pulling docker image"
+    - "redbot : starting docker container"
+  become: yes
