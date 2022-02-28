@@ -1,0 +1,16 @@
+---
+- name: Make sure services/config/portaienr exists
+  file:
+    path: "{{ appdata_dir }}/portainer"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: files/docker-compose.yml
+    dest: "{{ appdata_dir }}/portainer"
+    validate: docker-compose -f %s config
+  notify:
+    - pulling docker image
+    - starting docker container
+  become: yes

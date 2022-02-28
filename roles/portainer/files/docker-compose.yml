@@ -1,0 +1,15 @@
+---
+version: '3.2'
+
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "{{ portainer_http_port }}:8000"
+      - "{{ portainer_https_port }}:9443"
+      - "{{ portainer_webapp_port }}:9000"
