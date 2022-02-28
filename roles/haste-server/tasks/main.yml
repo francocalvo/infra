@@ -11,6 +11,6 @@
     dest: "{{ appdata_dir }}/haste-server"
     validate: docker-compose -f %s config
   notify:
-    - pulling docker image
-    - starting docker container
+    - "haste-server : pulling docker image"
+    - "haste-server : starting docker container"
   become: yes

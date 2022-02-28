@@ -11,6 +11,6 @@
     dest: "{{ appdata_dir }}/portainer"
     validate: docker-compose -f %s config
   notify:
-    - pulling docker image
-    - starting docker container
+    - "portainer : pulling docker image"
+    - "portainer : starting docker container"
   become: yes

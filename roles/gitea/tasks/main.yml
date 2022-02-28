@@ -11,8 +11,8 @@
     dest: "{{ appdata_dir }}/git"
     validate: docker-compose -f %s config
   notify:
-    - pulling docker image
-    - starting docker container
+    - "gitea : pulling docker image"
+    - "gitea : starting docker container"
   become: yes
 
 - name: Install custom header for KaTeX.
@@ -21,3 +21,4 @@
     dest: "{{ appdata_dir }}/git/gitea/gitea/templates/custom/"
     force: no
   become: yes
+
