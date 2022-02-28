@@ -1,6 +1,4 @@
 ---
-# tasks file for gitea
-
 - name: Make sure services/config/haste-server exists
   file:
     path: "{{ appdata_dir }}/haste-server"
