@@ -15,6 +15,14 @@
     - "gitea : starting docker container"
   become: yes
 
+- name: Make sure app.ini is configured.
+  template:
+    src: files/app.ini
+    dest: "{{ appdata_dir }}/git/gitea/gitea/gitea/conf|"
+  notify:
+    - "gitea : restarting docker container"
+  become: yes
+
 - name: Install custom header for KaTeX.
   copy:
     src: "../files/header.tmpl"

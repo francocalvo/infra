@@ -11,3 +11,9 @@
     chdir: "{{appdata_dir}}/git"
     cmd: "docker-compose up -d"
   become: true
+
+- name: restarting docker container
+  shell:
+    chdir: "{{appdata_dir}}/git"
+    cmd: "docker-compose restart"
+  become: true
