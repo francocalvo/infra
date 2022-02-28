@@ -3,22 +3,24 @@
   hosts: vulcan
   become: no
 
-  pre_tasks:
-    - name: Update and upgrade repositories.
-      apt:
-        update_cache=yes
-        upgrade=yes
-      become: yes
+  # pre_tasks:
+  #   - name: Update and upgrade repositories.
+  #     apt:
+  #       update_cache=yes
+  #       upgrade=yes
+  #     become: yes
 
   roles:
     # - geerlingguy.docker
     # - docker-compose
-    # - haste-server
-    # - vim
     # - samba
+    - automation-stack
+    - gitea
+    - haste-server
+    - portainer
+    # - vim
     # - duplicati
     # - haste-client
-    - gitea
     # - qbittorrent
     # - calibre-web
     # - jellyfin

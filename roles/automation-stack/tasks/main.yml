@@ -1,0 +1,16 @@
+---
+- name: Make sure services/config/automation exists
+  file:
+    path: "{{ appdata_dir }}/automation"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: files/docker-compose.yml
+    dest: "{{ appdata_dir }}/automation"
+    validate: docker-compose -f %s config
+  notify:
+    - "automation-stack : pulling docker image"
+    - "automation-stack : starting docker container"
+  become: yes
