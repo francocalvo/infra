@@ -1,0 +1,56 @@
+---
+- name: Make sure services/config/swag exists
+  file:
+    path: "{{ appdata_dir }}/swag"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml installed.
+  template:
+    src: templates/docker-compose.yml
+    dest: "{{ appdata_dir }}/swag"
+    validate: docker-compose -f %s config
+  notify:
+    - "swag : pulling docker image"
+    - "swag : starting docker container"
+  become: yes
+
+- name: Make sure SWAG is running.
+  meta: flush_handlers
+
+- name: Make sure nginx configurations installed.
+  copy:
+    src: "{{ item }}"
+    dest: "{{ appdata_dir }}/swag/config/nginx"
+    force: yes
+  with_fileglob: "files/*.conf"
+  become: yes
+  notify:
+    - "swag : restarting docker container"
+
+- name: Make sure MindMax database is installed.
+  copy:
+    src: files/GeoLite2-City.mmdb
+    dest: "{{ appdata_dir }}/swag/config/geoip2db"
+    force: no
+  become: yes
+  notify:
+    - "swag : restarting docker container"
+
+- name: Make sure fail2ban files are installed.
+  copy:
+    src: files/jail.local
+    dest: "{{ appdata_dir }}/swag/config/fail2ban"
+    force: yes
+  become: yes
+  notify:
+    - "swag : restarting docker container"
+
+- name: Make sure proxy configs are installed.
+  template:
+    src: "{{ item }}"
+    dest: "{{ appdata_dir }}/swag/config/nginx/proxy-confs"
+  with_fileglob: 'templates/proxy-confs/*.conf'
+  become: yes
+  notify:
+    - "swag : restarting docker container"

@@ -1,0 +1,25 @@
+---
+version: "2.1"
+services:
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID={{ swag_uid }}
+      - PGID={{ swag_gid }}
+      - TZ={{ TZ }}
+      - URL={{ swag_domain }}
+      - VALIDATION=http
+      - SUBDOMAINS={{ swag_subdomains }}
+      - ONLY_SUBDOMAINS={{ swag_only_subdomain }}
+      - EXTRA_DOMAINS={{ swag_extra_domains }}
+      - STAGING=false #optional
+      - MAXMINDDB_LICENSE_KEY={{ swag_maxmind_key }}
+    volumes:
+      - ./config:/config
+    ports:
+      - "{{ swag_https_port }}:443"
+      - "{{ swag_http_port }}:80"
+    restart: unless-stopped

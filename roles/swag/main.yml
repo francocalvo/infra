@@ -1,0 +1,30 @@
+---
+- name: Make sure services/config/swag exists
+  file:
+    path: "{{ appdata_dir }}/swag"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: files/docker-compose.yml
+    dest: "{{ appdata_dir }}/swag"
+    validate: docker-compose -f %s config
+  become: yes
+  # notify:
+  #   - "swag : pulling docker image"
+  #   - "swag : starting docker container"
+
+- name: Make sure docker-compose.yml is in place.
+  copy:
+    - src: "{{ item }}"
+    - dest: "{{ appdata_dir }}/swag/config/nginx"
+    - force: yes
+  with_fileglob: 'files/nginx/*.conf'
+
+- name: Make sure proxy configs are in place.
+  template:
+    - src: "{{ item }}"
+    - dest: "{{ appdata_dir }}/swag/config/nginx/proxy_confs"
+  with_fileglob: 'templates/proxy-confs/*.conf'
+
