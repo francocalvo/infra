@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: vulcan
+  hosts: dionisio
   become: no
 
   # pre_tasks:
@@ -11,14 +11,15 @@
   #     become: yes
 
   roles:
+    - swag
     # - geerlingguy.docker
     # - docker-compose
     # - samba
-    - automation-stack
-    - gitea
-    - haste-server
-    - portainer
-    - redbot
+    # - automation-stack
+    # - gitea
+    # - haste-server
+    # - portainer
+    # - redbot
     # - vim
     # - duplicati
     # - haste-client
