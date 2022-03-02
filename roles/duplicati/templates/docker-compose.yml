@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  duplicati:
+    image: linuxserver/duplicati
+    container_name: duplicati
+    environment:
+      - PUID={{ duplicati_uid }}
+      - PGID={{ duplicati_gid }}
+      - TZ={{ TZ }}
+    volumes:
+      - ./duplicati:/config #configfiles
+      - {{ duplicati_backup_target }}:/ServicesBackedup #backupstorage
+      - {{ duplicati_backup_storage }}:/BackupStorage #backupedfolder
+    ports:
+      - {{ duplicati_port }}:8200
+    restart: unless-stopped
