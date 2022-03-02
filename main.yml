@@ -11,7 +11,7 @@
   #     become: yes
 
   roles:
-    - authentik
+    - code-server
     # - swag
     # - geerlingguy.docker
     # - docker-compose
