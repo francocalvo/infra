@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: dionisio
+  hosts: vulcan
   become: no
 
   # pre_tasks:
@@ -11,7 +11,8 @@
   #     become: yes
 
   roles:
-    - swag
+    - authentik
+    # - swag
     # - geerlingguy.docker
     # - docker-compose
     # - samba
