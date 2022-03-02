@@ -1,0 +1,35 @@
+---
+version: "2.1"
+services:
+  jellyfin:
+    image: linuxserver/jellyfin:amd64-latest
+    container_name: jellyfin
+    environment:
+      - PUID={{ jellyfin_uid }}
+      - PGID={{ jellyfin_gid }}
+        #- JELLYFIN_PublishedServerUrl=https://jellyfin.francocalvo.ar
+      - TZ={{ TZ }}
+    volumes:
+      - ./jellyfin:/config
+      - "{{ series_dir }}:/data/tvshows"
+      - "{{ movies_dir }}:/data/movies"
+    ports:
+      - "{{ jellyfin_port }}:8096"
+      - "{{ jellyfin_port_https }}:8920" #optional
+      - "{{ jellyfin_port_localdiscovery }}:7359/udp" #optional
+      - "{{ jellyfin_port_dlna }}:1900/udp" #optional
+    devices:
+      - /dev/dri:/dev/dri #optiona
+      - /dev/dri/renderD128:/dev/dri/renderD128 #optiona
+    restart: unless-stopped
+    # network_mode: host
+
+  jf-go:
+    image: hrfee/jfa-go:latest
+    container_name: jfa-go
+    ports:
+      - "{{ jfa_port }}:8056"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./jfa-go:/data
+    restart: unless-stopped

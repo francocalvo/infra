@@ -1,41 +1,28 @@
 ---
-# tasks file for gitea
-
 - name: Make sure services/config/jellyfin exists
   file:
-    path: "{{ ansible_env.HOME  }}/services/config/jellyfin"
+    path: "{{ appdata_dir }}/jellyfin"
     state: directory
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
-  copy:
-    src: ../files/docker-compose.yml
-    dest: "{{ ansible_env.HOME  }}/services/config/jellyfin"
-    force: no
+  template:
+    src: templates/docker-compose.yml
+    dest: "{{ appdata_dir }}/jellyfin"
+    validate: docker-compose -f %s config
+  notify:
+    - "jellyfin : pulling docker image"
+    - "jellyfin : starting docker container"
   become: yes
+  when: jellyfin_hw
 
-- name: Configure config directory.
-  lineinfile:
-    path: "{{ ansible_env.HOME  }}/services/config/jellyfin/docker-compose.yml"
-    regexp: '/config$'
-    line: "      - {{ ansible_env.HOME }}/services/config/jellyfin:/config"
+- name: Make sure docker-compose.yml is in place. (without HWA)
+  template:
+    src: templates/nohwa/docker-compose.yml
+    dest: "{{ appdata_dir }}/jellyfin"
+    validate: docker-compose -f %s config
+  notify:
+    - "jellyfin : pulling docker image"
+    - "jellyfin : starting docker container"
   become: yes
-
-- name: Configure PUID.
-  lineinfile:
-    path: "{{ ansible_env.HOME  }}/services/config/jellyfin/docker-compose.yml"
-    regexp: 'PUID'
-    line: "      - PUID={{ ansible_user_uid  }}"
-  become: yes
-
-- name: Configure PGID.
-  lineinfile:
-    path: "{{ ansible_env.HOME  }}/services/config/jellyfin/docker-compose.yml"
-    regexp: 'PGID'
-    line: "      - PGID={{ ansible_user_gid  }}"
-  become: yes
-
-- name: Start docker container.
-  community.docker.docker_compose:
-    project_src: "{{ ansible_env.HOME  }}/services/config/jellyfin/"
-  become: yes
+  when: not jellyfin_hw

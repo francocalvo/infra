@@ -11,7 +11,9 @@
   #     become: yes
 
   roles:
-    - code-server
+    - jellyfin
+    # - duplicati
+    # - code-server
     # - swag
     # - geerlingguy.docker
     # - docker-compose
