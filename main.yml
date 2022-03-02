@@ -11,7 +11,8 @@
   #     become: yes
 
   roles:
-    - jellyfin
+    - librespeed
+    # - jellyfin
     # - duplicati
     # - code-server
     # - swag

@@ -1,0 +1,18 @@
+---
+version: "2.1"
+services:
+  librespeed:
+    image: linuxserver/librespeed
+    container_name: librespeed
+    environment:
+      - PUID={{ librespeed_uid }}
+      - PGID={{ librespeed_gid }}
+      - TZ={{ TZ }}
+      - PASSWORD={{ librespeed_password }}
+      - CUSTOM_RESULTS=false 
+      - DB_TYPE=sqlite 
+    volumes:
+      - /path/to/appdata/config:/config
+    ports:
+      - {{ librespeed_port }}:80
+    restart: unless-stopped
