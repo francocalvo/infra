@@ -1,0 +1,20 @@
+---
+version: "2.1"
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID={{ qbittorrent_uid }}
+      - PGID={{ qbittorrent_uid }}
+      - TZ={{ TZ }}
+      - UMASK=022
+      - WEBUI_PORT={{ qbittorrent_port }}
+    volumes:
+      - ./qbittorrent:/config
+      - "{{ cache_dir }}/downloads:/downloads"
+    ports:
+      - "{{ qbittorrent_p2p_port }}:6881"
+      # - "{{ qbittorrent_p2p_port }}:6881/upd"
+      - "{{ qbittorrent_port }}:8080"
+    restart: unless-stopped

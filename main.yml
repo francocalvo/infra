@@ -11,7 +11,8 @@
   #     become: yes
 
   roles:
-    - paperless
+    - qbittorrent
+    # - paperless
     # - librespeed
     # - jellyfin
     # - duplicati
