@@ -11,7 +11,9 @@
   #     become: yes
 
   roles:
-    - qbittorrent
+    - syncthing
+    # - photoprism
+    # - qbittorrent
     # - paperless
     # - librespeed
     # - jellyfin
