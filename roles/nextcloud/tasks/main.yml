@@ -1,0 +1,30 @@
+---
+- name: Make sure services/config/nextcloud exists
+  file:
+    path: "{{ appdata_dir }}/nextcloud"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: templates/docker-compose.yml
+    dest: "{{ appdata_dir }}/nextcloud"
+    validate: docker-compose -f %s config
+  notify:
+    - "nextcloud : pulling docker image"
+    - "nextcloud : starting docker container"
+  become: yes
+
+- name: Make sure config folder exists
+  file:
+    path: "{{ appdata_dir }}/nextcloud/nextcloud/www/nextcloud/config"
+    state: directory
+  become: yes
+
+- name: Make sure config.php is in place.
+  template:
+    src: templates/config.php
+    dest: "{{ appdata_dir }}/nextcloud/nextcloud/www/nextcloud/config"
+  notify:
+    - "nextcloud : restarting docker container"
+  become: yes
