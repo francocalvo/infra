@@ -8,6 +8,8 @@
 - name: Ensure samba mountpoint exists.
   file:
     path: "{{ samba_dir }}"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
     state: directory
   become: true
 

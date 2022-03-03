@@ -3,6 +3,8 @@
   file:
     path: "{{ appdata_dir }}/qbittorrent"
     state: directory
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
@@ -10,6 +12,8 @@
     src: templates/docker-compose.yml
     dest: "{{ appdata_dir }}/qbittorrent"
     validate: docker-compose -f %s config
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   notify:
     - "qbittorrent : pulling docker image"
     - "qbittorrent : starting docker container"

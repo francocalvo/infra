@@ -3,6 +3,8 @@
   file:
     path: "{{ appdata_dir }}/swag"
     state: directory
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
   become: yes
 
 - name: Make sure docker-compose.yml installed.
@@ -10,6 +12,8 @@
     src: templates/docker-compose.yml
     dest: "{{ appdata_dir }}/swag"
     validate: docker-compose -f %s config
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   notify:
     - "swag : pulling docker image"
     - "swag : starting docker container"
@@ -23,6 +27,8 @@
     src: "{{ item }}"
     dest: "{{ appdata_dir }}/swag/config/nginx"
     force: yes
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   with_fileglob: "files/*.conf"
   become: yes
   notify:
@@ -33,6 +39,8 @@
     src: files/GeoLite2-City.mmdb
     dest: "{{ appdata_dir }}/swag/config/geoip2db"
     force: no
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   become: yes
   notify:
     - "swag : restarting docker container"
@@ -42,6 +50,8 @@
     src: files/jail.local
     dest: "{{ appdata_dir }}/swag/config/fail2ban"
     force: yes
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   become: yes
   notify:
     - "swag : restarting docker container"
@@ -50,6 +60,8 @@
   template:
     src: "{{ item }}"
     dest: "{{ appdata_dir }}/swag/config/nginx/proxy-confs"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   with_fileglob: 'templates/proxy-confs/*.conf'
   become: yes
   notify:

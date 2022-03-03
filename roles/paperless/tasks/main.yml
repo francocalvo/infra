@@ -2,6 +2,8 @@
 - name: Make sure services/config/paperless exists
   file:
     path: "{{ appdata_dir }}/paperless"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
     state: directory
   become: yes
 
@@ -10,6 +12,8 @@
     src: templates/docker-compose.yml
     dest: "{{ appdata_dir }}/paperless"
     validate: docker-compose -f %s config
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   notify:
     - "paperless : pulling docker image"
     - "paperless : starting docker container"

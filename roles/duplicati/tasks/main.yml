@@ -2,6 +2,8 @@
 - name: Make sure services/config/duplicati exists
   file:
     path: "{{ appdata_dir }}/duplicati"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
     state: directory
   become: yes
 
@@ -9,6 +11,8 @@
   template:
     src: templates/docker-compose.yml
     dest: "{{ appdata_dir }}/duplicati"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
     validate: docker-compose -f %s config
   notify:
     - "duplicati : pulling docker image"
@@ -19,6 +23,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ appdata_dir }}/duplicati"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
     force: yes
   with_fileglob: "files/*.json"
   become: yes

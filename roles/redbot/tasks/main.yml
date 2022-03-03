@@ -3,6 +3,8 @@
   file:
     path: "{{ appdata_dir }}/redbot"
     state: directory
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_dictionary_mask }}"
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
@@ -10,6 +12,8 @@
     src: files/docker-compose.yml
     dest: "{{ appdata_dir }}/redbot"
     validate: docker-compose -f %s config
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   notify:
     - "redbot : pulling docker image"
     - "redbot : starting docker container"

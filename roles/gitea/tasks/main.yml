@@ -3,12 +3,16 @@
   file:
     path: "{{ appdata_dir }}/git"
     state: directory
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}" 
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
   template:
     src: files/docker-compose.yml
     dest: "{{ appdata_dir }}/git"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
     validate: docker-compose -f %s config
   notify:
     - "gitea : pulling docker image"
@@ -19,6 +23,8 @@
   template:
     src: files/app.ini
     dest: "{{ appdata_dir }}/git/gitea/gitea/gitea/conf|"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
   notify:
     - "gitea : restarting docker container"
   become: yes
@@ -27,6 +33,8 @@
   copy:
     src: "../files/header.tmpl"
     dest: "{{ appdata_dir }}/git/gitea/gitea/templates/custom/"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
     force: no
   become: yes
 

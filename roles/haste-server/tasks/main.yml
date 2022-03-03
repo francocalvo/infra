@@ -3,12 +3,16 @@
   file:
     path: "{{ appdata_dir }}/haste-server"
     state: directory
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
   template:
     src: files/docker-compose.yml
     dest: "{{ appdata_dir }}/haste-server"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
     validate: docker-compose -f %s config
   notify:
     - "haste-server : pulling docker image"
