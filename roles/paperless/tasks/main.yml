@@ -1,0 +1,16 @@
+---
+- name: Make sure services/config/paperless exists
+  file:
+    path: "{{ appdata_dir }}/paperless"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: templates/docker-compose.yml
+    dest: "{{ appdata_dir }}/paperless"
+    validate: docker-compose -f %s config
+  notify:
+    - "paperless : pulling docker image"
+    - "paperless : starting docker container"
+  become: yes

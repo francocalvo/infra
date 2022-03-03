@@ -11,7 +11,8 @@
   #     become: yes
 
   roles:
-    - librespeed
+    - paperless
+    # - librespeed
     # - jellyfin
     # - duplicati
     # - code-server
@@ -30,3 +31,7 @@
     # - qbittorrent
     # - calibre-web
     # - jellyfin
+
+
+    ## Todavia por trabajar
+    # - nextcloud
