@@ -1,0 +1,38 @@
+---
+# tasks file for cloudflare-dns
+
+- name: Ensure A record exists.
+  community.general.cloudflare_dns:
+    zone: "{{ domain }}"
+    type: A
+    value: "{{ public_ip }}"
+    api_token: "{{ cloudflare_api_token }}"
+
+- name: Ensure all CNAME records exist.
+  community.general.cloudflare_dns:
+    zone: "{{ domain }}"
+    type: CNAME
+    record: "{{ item }}"
+    value: "@"
+    state: present
+    api_token: "{{ cloudflare_api_token }}"
+  with_items:
+    - auth
+    - bin
+    - code
+    - dash
+    - drone
+    - git
+    - jfa
+    - jellyfin
+    - minio
+    - next
+    - office
+    - ombi
+    - speed
+    - paper
+    - photos
+    - wiki
+    - wikidata
+    - www
+    - notes

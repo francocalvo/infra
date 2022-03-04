@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: vulcan
+  hosts: dionisio
   become: no
 
   # pre_tasks:
@@ -11,7 +11,8 @@
   #     become: yes
 
   roles:
-    - syncthing
+    - cloudflare-dns
+    # - syncthing
     # - photoprism
     # - qbittorrent
     # - paperless
