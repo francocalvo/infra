@@ -12,20 +12,21 @@
 
   roles:
     # - cloudflare-dns
+    - swag
+    # - firefly
     # - syncthing
-    - photoprism
+    # - photoprism
     # - qbittorrent
     # - paperless
     # - librespeed
     # - jellyfin
     # - duplicati
     # - code-server
-    # - swag
     # - geerlingguy.docker
     # - docker-compose
     # - samba
     # - automation-stack
-    - gitea
+    # - gitea
     # - haste-server
     # - portainer
     # - redbot
