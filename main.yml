@@ -11,9 +11,9 @@
   #     become: yes
 
   roles:
-    - cloudflare-dns
+    # - cloudflare-dns
     # - syncthing
-    # - photoprism
+    - photoprism
     # - qbittorrent
     # - paperless
     # - librespeed
@@ -25,7 +25,7 @@
     # - docker-compose
     # - samba
     # - automation-stack
-    # - gitea
+    - gitea
     # - haste-server
     # - portainer
     # - redbot

@@ -4,7 +4,7 @@
     path: "{{ appdata_dir }}/redbot"
     state: directory
     owner: "{{ docker_user.name }}"
-    mode: "{{ docker_compose_dictionary_mask }}"
+    mode: "{{ docker_compose_directory_mask }}"
   become: yes
 
 - name: Make sure docker-compose.yml is in place.
