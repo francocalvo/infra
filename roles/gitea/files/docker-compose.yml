@@ -24,7 +24,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "{{ gitea_webport }}:3000"
+      - "{{ gitea_port }}:3000"
       - "{{ gitea_sshport }}:22"
     networks:
       - gitea

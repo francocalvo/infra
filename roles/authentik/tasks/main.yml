@@ -1,0 +1,30 @@
+---
+- name: Make sure services/config/authentik exists
+  file:
+    path: "{{ appdata_dir }}/authentik"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
+    state: directory
+  become: yes
+
+- name: Make sure env file is in place.
+  template:
+    src: templates/.env
+    dest: "{{ appdata_dir }}/authentik"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
+  notify:
+    - "authentik : restarting docker container"
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: templates/docker-compose.yml
+    dest: "{{ appdata_dir }}/authentik"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
+    # validate: docker-compose -f %s config
+  notify:
+    - "authentik : pulling docker image"
+    - "authentik : starting docker container"
+  become: yes

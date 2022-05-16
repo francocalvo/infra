@@ -1,0 +1,62 @@
+services:
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ nextcloud_db_root }}
+      -  MYSQL_DATABASE={{ nextcloud_db_name }}
+      -  MYSQL_USER={{ nextcloud_db_user }}
+      -  MYSQL_PASSWORD={{ nextcloud_db_password }}
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  app:
+    image: linuxserver/nextcloud:php8
+    restart: unless-stopped
+    volumes:
+      - ./nextcloud:/config
+      - ./data:/data"
+    environment:
+      - TZ={{ TZ }}
+      - PUID={{ nextcloud_uid }}
+      - PGID={{ nextcloud_gid }}
+      # - DOCKER_MODS=theorangeone/lsio-mod-opcache:latest
+      # - DOCKER_MODS=theorangeone/lsio-mod-more-processes:latest
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "{{ nextcloud_port }}:443"
+
+  cron:
+    image: nextcloud:fpm-alpine
+    restart: always
+    volumes:
+      - ./nextcloud:/var/www/html
+    entrypoint: /cron.sh
+    depends_on:
+      - db
+      - redis
+
+  collabora:
+    image: collabora/code
+    container_name: collabora
+    environment:
+      # - domain=next\.francocalvo\.ar
+      - domain={{ collabora_nextcloud_domain }}
+      - username={{ collabora_user }}
+      - password={{ collabora_password }}
+      - extra_params="--o:ssl.enable=false  --o:ssl.temination=true"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    cap_add:
+      - MKNOD
+    ports:
+      - "{{ collabora_port }}:9980"
+    privileged: true
+    restart: always

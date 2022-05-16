@@ -6,7 +6,7 @@ services:
     container_name: hastebin
     network_mode: bridge
     ports:
-      - 7777:7777/tcp
+      - {{ haste_port }}:7777/tcp
     volumes:
       - {{ appdata_dir }}/haste-server/data:/app/data
 

@@ -1,0 +1,12 @@
+---
+- name: pulling docker image
+  shell:
+    chdir: "{{appdata_dir}}/portainer"
+    cmd: "docker-compose pull"
+  become: true
+
+- name: starting docker container
+  shell:
+    chdir: "{{appdata_dir}}/portainer"
+    cmd: "docker-compose up -d"
+  become: true

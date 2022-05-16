@@ -1,2 +1,12 @@
 ---
-# handlers file for jellyfin
+- name: pulling docker image
+  shell:
+    chdir: "{{appdata_dir}}/jellyfin"
+    cmd: "docker-compose pull"
+  become: true
+
+- name: starting docker container
+  shell:
+    chdir: "{{appdata_dir}}/jellyfin"
+    cmd: "docker-compose up -d"
+  become: true

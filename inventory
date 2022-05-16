@@ -4,3 +4,10 @@
 [vulcan:vars]
 ansible_ssh_user=vulcan
 ansible_python_interpreter=/usr/bin/python3
+
+[dionisio]
+192.168.0.68
+
+[dionisio:vars]
+ansible_ssh_user=dionisio
+ansible_python_interpreter=/usr/bin/python3

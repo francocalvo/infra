@@ -1,0 +1,19 @@
+---
+# handlers file for haste-server
+- name: pulling docker image
+  shell:
+    chdir: "{{appdata_dir}}/swag"
+    cmd: "docker-compose pull"
+  become: true
+
+- name: starting docker container
+  shell:
+    chdir: "{{appdata_dir}}/swag"
+    cmd: "docker-compose up -d"
+  become: true
+
+- name: restarting docker container
+  shell:
+    chdir: "{{appdata_dir}}/swag"
+    cmd: "docker-compose restart"
+  become: true

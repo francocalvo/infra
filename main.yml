@@ -1,6 +1,6 @@
 ---
 - name: Setting up server
-  hosts: vulcan
+  hosts: dionisio
   become: no
 
   pre_tasks:
@@ -11,14 +11,32 @@
       become: yes
 
   roles:
+    # - cloudflare-dns
+    # - swag
+    # - firefly
+    # - syncthing
+    # - photoprism
+    # - qbittorrent
+    - paperless
+    # - librespeed
+    # - jellyfin
+    # - duplicati
+    # - code-server
     # - geerlingguy.docker
     # - docker-compose
-    # - haste-server
-    # - vim
     # - samba
+    # - automation-stack
+    # - gitea
+    # - haste-server
+    # - portainer
+    # - redbot
+    # - vim
     # - duplicati
     # - haste-client
-    - gitea
     # - qbittorrent
     # - calibre-web
     # - jellyfin
+
+
+    ## Todavia por trabajar
+    # - nextcloud

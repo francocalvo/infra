@@ -1,0 +1,30 @@
+---
+- name: Make sure services/config/firefly exists
+  file:
+    path: "{{ appdata_dir }}/firefly"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
+    state: directory
+  become: yes
+
+- name: Make sure .env is in place.
+  template:
+    src: templates/.env
+    dest: "{{ appdata_dir }}/firefly"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
+  notify:
+    - "firefly : pulling docker image"
+    - "firefly : starting docker container"
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: templates/docker-compose.yml
+    dest: "{{ appdata_dir }}/firefly"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
+  notify:
+    - "firefly : pulling docker image"
+    - "firefly : starting docker container"
+  become: yes

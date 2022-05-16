@@ -1,2 +1,12 @@
 ---
-# handlers file for qbittorrent
+- name: pulling docker image
+  shell:
+    chdir: "{{appdata_dir}}/qbitorrent"
+    cmd: "docker-compose pull"
+  become: true
+
+- name: starting docker container
+  shell:
+    chdir: "{{appdata_dir}}/qbitorrent"
+    cmd: "docker-compose up -d"
+  become: true

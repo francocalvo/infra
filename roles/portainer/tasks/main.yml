@@ -1,0 +1,20 @@
+---
+- name: Make sure services/config/portaienr exists
+  file:
+    path: "{{ appdata_dir }}/portainer"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_directory_mask }}"
+    state: directory
+  become: yes
+
+- name: Make sure docker-compose.yml is in place.
+  template:
+    src: files/docker-compose.yml
+    dest: "{{ appdata_dir }}/portainer"
+    owner: "{{ docker_user.name }}"
+    mode: "{{ docker_compose_file_mask }}"
+    validate: docker-compose -f %s config
+  notify:
+    - "portainer : pulling docker image"
+    - "portainer : starting docker container"
+  become: yes

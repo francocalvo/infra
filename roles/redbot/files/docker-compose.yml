@@ -1,0 +1,39 @@
+---
+version: "3.2"
+
+services:
+  redbot-putita:
+    container_name: redbot-putita
+    image: phasecorex/red-discordbot
+    restart: unless-stopped
+    volumes:
+      - ./putita:/data
+    environment:
+      - TOKEN={{ redbot_putita_token }}
+      - PREFIX={{ redbot_putita_prefix }}
+      - TZ={{ TZ }}
+      - PUID={{ redbot_uid }}
+
+  redbot-kristina:
+    container_name: redbot2-kristina
+    image: phasecorex/red-discordbot
+    restart: unless-stopped
+    volumes:
+      - ./kristina:/data
+    environment:
+      - TOKEN={{ redbot_kristina_token }}
+      - PREFIX={{ redbot_kristina_prefix }}
+      - TZ={{ TZ }}
+      - PUID={{ redbot_uid }}
+
+  redbot-manuel:
+    container_name: redbot-manuel
+    image: phasecorex/red-discordbot
+    restart: unless-stopped
+    volumes:
+      - ./manuel:/data
+    environment:
+      - TOKEN={{ redbot_manuel_token }}
+      - PREFIX={{ redbot_manuel_prefix }}
+      - TZ={{ TZ }}
+      - PUID={{ redbot_uid }}

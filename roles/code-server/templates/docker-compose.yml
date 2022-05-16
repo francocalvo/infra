@@ -1,0 +1,19 @@
+---
+version: "2.1"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server
+    container_name: code-server
+    environment:
+      - PUID={{ codeserver_uid }}
+      - PGID={{ codeserver_gid }}
+      - TZ={{ TZ }}
+      - PASSWORD={{ codeserver_password }} #optional
+      - SUDO_PASSWORD={{ codeserver_sudo }} #optional
+      - PROXY_DOMAIN={{ codeserver_domain }}
+      - DEFAULT_WORKSPACE=/config #optional
+    volumes:
+      - ./config:/config
+    ports:
+      - {{ codeserver_port }}:8443
+    restart: unless-stopped
