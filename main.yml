@@ -3,21 +3,21 @@
   hosts: dionisio
   become: no
 
-  # pre_tasks:
-  #   - name: Update and upgrade repositories.
-  #     apt:
-  #       update_cache=yes
-  #       upgrade=yes
-  #     become: yes
+  pre_tasks:
+    - name: Update and upgrade repositories.
+      apt:
+        update_cache=yes
+        upgrade=yes
+      become: yes
 
   roles:
     # - cloudflare-dns
-    - swag
+    # - swag
     # - firefly
     # - syncthing
     # - photoprism
     # - qbittorrent
-    # - paperless
+    - paperless
     # - librespeed
     # - jellyfin
     # - duplicati
