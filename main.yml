@@ -13,11 +13,11 @@
   roles:
     # - cloudflare-dns
     # - swag
-    # - firefly
+     - firefly
     # - syncthing
     # - photoprism
     # - qbittorrent
-    - paperless
+    # - paperless
     # - librespeed
     # - jellyfin
     # - duplicati
